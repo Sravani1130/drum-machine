@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Machine</title>
+    <style>
+        #drum-machine {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .drum-pad {
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #display {
+            grid-column: 1 / -1;
+            background-color: #e0e0e0;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body bgcolor="grey">
+    <div id="drum-machine">
+        <div class="drum-pad" id="Heater-1">Q
+            <audio class="clip" id="Q" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Heater-2">W
+            <audio class="clip" id="W" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Heater-3">E
+            <audio class="clip" id="E" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Heater-4">A
+            <audio class="clip" id="A" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Clap">S
+            <audio class="clip" id="S" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Open-HH">D
+            <audio class="clip" id="D" src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Kick-n'-Hat">Z
+            <audio class="clip" id="Z" src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Kick">X
+            <audio class="clip" id="X" src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"></audio>
+        </div>
+        <div class="drum-pad" id="Closed-HH">C
+            <audio class="clip" id="C" src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"></audio>
+        </div>
+        <div id="display"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const drumPads = document.querySelectorAll('.drum-pad');
+            const display = document.getElementById('display');
+
+            drumPads.forEach(pad => {
+                const audio = pad.querySelector('.clip');
+                const soundName = pad.id;
+
+                pad.addEventListener('click', function() {
+                    audio.currentTime = 0;
+                    audio.play();
+                    display.innerText = soundName;
+                });
+            });
+
+            document.addEventListener('keydown', function(event) {
+                const key = event.key.toUpperCase();
+                const audio = document.getElementById(key);
+                const drumPad = audio ? audio.parentNode : null;
+
+                if (audio && drumPad && drumPad.classList.contains('drum-pad')) {
+                    audio.currentTime = 0;
+                    audio.play();
+                    display.innerText = drumPad.id;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
